@@ -1,6 +1,7 @@
 /**
 * Template Name: MyResume – Modified for Imran Karimov
 * Updated with custom typography, spacing, interactive states, and styled components
+* Fixed: Left navigation panel hidden by default on all screen sizes unless toggled
 */
 
 /*--------------------------------------------------------------
@@ -192,13 +193,13 @@ section,
 }
 
 /*--------------------------------------------------------------
-# Header & Navigation
+# Header & Navigation – FIXED: Hidden by default
 --------------------------------------------------------------*/
 .header {
   color: var(--default-color);
   position: fixed;
   top: 0;
-  left: 0;
+  left: -100%; /* Always start hidden */
   bottom: 0;
   padding: 0 15px;
   transition: all ease-in-out 0.3s;
@@ -209,17 +210,27 @@ section,
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Only show when .header-show is added (via JS toggle) */
+.header.header-show {
+  left: 0;
+}
+
+/* Mobile override: still hidden by default */
 @media (max-width: 1199px) {
   .header {
-    background-color: var(--background-color);
-    border-right: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
     width: 300px;
     left: -100%;
   }
 }
 
-.header.header-show {
-  left: 0;
+/* Desktop: ensure it stays hidden unless toggled */
+@media (min-width: 1200px) {
+  .header {
+    left: -100% !important;
+  }
+  .header.header-show {
+    left: 0 !important;
+  }
 }
 
 .header .header-toggle {
